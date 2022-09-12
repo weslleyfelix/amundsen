@@ -4,7 +4,7 @@
         sudo rm -rf /var/lib/docker-compose
         sudo rm -rf /usr/local/bin/docker-compose
 ```
-##### Deletar o docker
+## Deletar o docker
 ```
         sudo apt-get update
         sudo apt-get purge docker-ce docker-ce-cli containerd.io
@@ -13,7 +13,7 @@
 ```
 obs.: Deletar caso tenha sido instalado anteriormente
 
-##### Instalação do Docker no Ubunto 20.04.4
+## Instalação do Docker no Ubunto 20.04.4
 
 ``` 
     sudo apt-get update
@@ -41,7 +41,7 @@ instalando o docker
     sudo apt-get install docker-ce docker-ce-cli containerd.io
 ```
 
-##### Instalação do docker-compose 1.29.2-1 no ubunto 20.04.4
+## Instalação do docker-compose 1.29.2-1 no ubunto 20.04.4
 ```
     sudo apt update
     sudo apt upgrade
@@ -53,13 +53,13 @@ permissão
     sudo chmod +x /usr/bin/docker-compose
 ```
 
-##### Criando o repositorio do projeto
+## Criando o repositorio do projeto
 
    mkdir repo-amundsen
    chmod -R repo-amundsen
    cd repo-amundsen
 
-##### docker-compose.yaml
+## docker-compose.yaml
 
    - criar uma pasta para baixar o dockerfile do amundsen git clone --recursive https://github.com/amundsen-io/amundsen.git, apos o download copie o conteudo centralizando em um unico arquivo.
    - criar uma pasta para baixar o dockerfile do airflow git clone https://github.com/danilosousadba/airflow.git, apos o download copiar o conteudo para mesclar em um unico arquivo e alterar a versão para 2.2.2
