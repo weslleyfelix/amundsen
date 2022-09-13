@@ -54,10 +54,11 @@ permissão
 ```
 
 ## Criando o repositorio do projeto
-
+```
    mkdir repo-amundsen
    chmod -R repo-amundsen
    cd repo-amundsen
+```
 
 ## docker-compose.yaml
 
