@@ -1,9 +1,10 @@
 #formato de declaração do arquivo docker-compose.yaml
 version: '3'
 
-#variaveis do airflow
+#variáveis do airflow
 x-airflow-common:
   &airflow-common
+  #versão
   image: ${AIRFLOW_IMAGE_NAME:-apache/airflow:2.2.2}
   environment:
     &airflow-common-env
@@ -14,6 +15,8 @@ x-airflow-common:
     AIRFLOW_CORE_FERNET_KEY: ''
     AIRFLOW_CORE_DAGS_ARE_PAUSED_AT_CREATION: 'true'
     AIRFLOW_CORE_LOAD_EXAMPLES: 'false'
+    
+  #mountpoints  
   volumes:
     - /opt/airflow/dags:/opt/airflow/dags
     - /opt/airflow/logs:/opt/airflow/logs
@@ -26,8 +29,12 @@ x-airflow-common:
     postgres:
       condition: service_healthy
 
+
+#imagens dos serviços que serão executados
 services:
-  #airflow
+
+#serviços do airflow
+  #Bancos de dados relacional útilizado para metadados
   postgres:
     image: postgres:13
     environment:
@@ -41,7 +48,8 @@ services:
       interval: 5s
       retries: 5
     restart: always
-
+    
+  #faz parte do cluster de executores
   redis:
     image: redis:latest
     ports:
@@ -52,7 +60,8 @@ services:
       timeout: 30s
       retries: 50
     restart: always
-
+  
+  #aplicação do airflow
   airflow-webserver:
     <<: *airflow-common
     command: webserver
@@ -84,7 +93,8 @@ services:
       _AIRFLOW_WWW_USER_CREATE: 'true'
       _AIRFLOW_WWW_USER_USERNAME: ${_AIRFLOW_WWW_USER_USERNAME:-airflow}
       _AIRFLOW_WWW_USER_PASSWORD: ${_AIRFLOW_WWW_USER_PASSWORD:-airflow}
-
+      
+  #ferramenta para gerenciar os executores
   flower:
     <<: *airflow-common
     command: celery flower
@@ -97,7 +107,8 @@ services:
       retries: 5
     restart: always
   
-  #amundsen  
+#Serviços do amundsen  
+  #realiza a construção dos grafos de metadados, trabalha em conjunto com amundsenmetadatalibrary
   neo4j:
       image: neo4j:3.5.26
       container_name: neo4j_amundsen
@@ -117,6 +128,8 @@ services:
           - neo4j_data:/data
       networks:
         - amundsennet
+  
+  #índices de pesquisa trabalha em conjunto com o amundsensearchlibrary
   elasticsearch:
       image: elasticsearch:8.0.0
       container_name: es_amundsen
@@ -133,6 +146,8 @@ services:
       environment:
         - discovery.type=single-node
         - xpack.security.enabled=false
+        
+  #amundsensearchlibrary - serviço de pesquisa dos metadados     
   amundsensearch:
       image: amundsendev/amundsen-search:4.0.2
       container_name: amundsensearch
@@ -145,6 +160,8 @@ services:
       environment:
         - PROXY_ENDPOINT=es_amundsen
       command: gunicorn -w 2 --bind :5000 search_service.search_wsgi
+   
+  #amundsenmetadatalibrary - serviço de metadados 
   amundsenmetadata:
       image: amundsendev/amundsen-metadata:3.11.0
       container_name: amundsenmetadata
@@ -157,6 +174,8 @@ services:
       environment:
          - PROXY_HOST=bolt://neo4j_amundsen
       command: gunicorn -w 2 --bind :5000 metadata_service.metadata_wsgi
+  
+  #amundsenfrontendlibrary - serviço de front-end do amundsen
   amundsenfrontend:
       image: amundsendev/amundsen-frontend:4.2.0
       container_name: amundsenfrontend
