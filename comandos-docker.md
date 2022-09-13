@@ -2,7 +2,7 @@
 
 ## Comandos docker
 
-#### docker run  
+- docker run  
 executa uma imagem ex: 
 ```
 docker run hello-world
