@@ -19,6 +19,7 @@ chmod -R 777 /opt/airflow
 cd airflow
 ```
 ```
+docker-compose up airflow-init
 docker-compose up -d
 ```
 
