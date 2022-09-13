@@ -1,8 +1,8 @@
-#Comandos Úteis
+# Comandos Úteis
 
-#Comandos docker]
+## Comandos docker
 
-####docker run  
+#### docker run  
 executa uma imagem ex: 
 ```
 docker run hello-world
@@ -13,7 +13,7 @@ docker run ubuntu /bin/bash
 ```
 Obs.: este último baixa a imagem do ubunto e roda o bash para executarmos comandos
 
-####redirecionamento de porta 
+#### redirecionamento de porta 
 ```
 docker run -d -p 8080:80 nginx
 ```
