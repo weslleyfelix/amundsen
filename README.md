@@ -1,5 +1,5 @@
 # amundsen
-Instalação do Amundsen no ubuntu 20.04.4 LTS
+Instalação do Amundsen no ubuntu 20.04.4 LTS com o docker compose.
 
 ## Pré Requisitos
 - docker-compose 1.29.2-1 
