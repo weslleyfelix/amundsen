@@ -1,0 +1,6 @@
+pyhocon
+amundsen-databuilder
+pyathena
+
+#subir apenas o airflow
+docker-compose -f docker-airflow.yml up -d
