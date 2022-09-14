@@ -1,0 +1,5 @@
+#subir apenas o amundsen
+docker-compose -f docker-amundsen.yml up -d
+
+#clonar todos os arquivos de instalação e exemplo do amundsen
+git clone --recursive https://github.com/amundsen-io/amundsen.git
