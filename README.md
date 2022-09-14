@@ -3,7 +3,7 @@ Instalação do Amundsen no ubuntu 20.04.4 LTS
 
 ## Pré Requisitos
 - docker-compose 1.29.2-1 
-- airflow 2.2.2.
+- airflow 2.1.4.
 
 ## Airflow
 ### Setup
