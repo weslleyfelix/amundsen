@@ -80,6 +80,9 @@ docker rmi nginx
 ```
 ### docker system prune -a 
 Limpa Todas as Imagens, Contêineres, Volumes e Redes não Utilizadas ou Pendentes.
+
+### docker stats
+Verificar o consumo dos contêiner "RMA/CPU".
   
 ### reapontando volumes 
 Editar a variável dentro do docker-compose.yaml.
