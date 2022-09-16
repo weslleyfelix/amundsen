@@ -133,7 +133,7 @@ services:
   elasticsearch:
       image: elasticsearch:8.0.0
       container_name: es_amundsen
-      #o elasticsearch consome muito da maquina por este motivo é bom colocarmos um limit mesmo que a pesquisa fique um pouco lente.
+      #o elasticsearch consome muito da maquina por este motivo é bom colocarmos um limit mesmo que a pesquisa fique um pouco lenta.
       mem_limit: 6000m
       #mem_reservation: 4000m
       ports:
