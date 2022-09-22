@@ -520,21 +520,30 @@ with DAG(
 ) as dag: 
 
     # As tarefas abaixo usam o operador PythonOperator
-    ## T1 - Primeira Tarefa 
-    postgres_table_extract_job = PythonOperator(
-        task_id='postgres_table_extract_job',
+    
+    delta_table_last_updated_job = PythonOperator(
+        task_id='delta_table_last_updated_job',     
+        python_callable=DeltaLakeMetadataExtractor.create_table_last_updated
+    )
+
+    delta_table_table_metadata_job = PythonOperator(
+        task_id='delta_table_table_metadata_job',     
+        python_callable=DeltaLakeMetadataExtractor.create_table_metadata
+    )
+
+    neo4j_metadata_job = PythonOperator(
+        task_id='neo4j_metadata_job',
         
         python_callable=create_table_extract_job
     )
 
-    ## T2 - Segunda tarefa
-    postgres_es_index_job = PythonOperator(
-        task_id='postgres_es_publisher_sample_job',
+    elasticsearch_index_job = PythonOperator(
+        task_id='elasticsearch_index_job',
         python_callable=create_es_publisher_sample_job
     )
 
-    # Configurar a tarefa T2 para ser dependente da tarefa T1
-    # Atualização da pesquisa no elasticsearch executada após a atualização dos metadados da tabela
-    postgres_table_extract_job >> postgres_es_index_job
+    # Ordem de execução dos Operators/Tasks
+    ## Atualização da pesquisa no elasticsearch executada após a atualização dos metadados da tabela
+    delta_table_last_updated_job>> delta_table_table_metadata_job>> neo4j_metadata_job >> elasticsearch_index_job
     
     
