@@ -523,6 +523,7 @@ with DAG(
     ## T1 - Primeira Tarefa 
     postgres_table_extract_job = PythonOperator(
         task_id='postgres_table_extract_job',
+        
         python_callable=create_table_extract_job
     )
 
@@ -535,16 +536,5 @@ with DAG(
     # Configurar a tarefa T2 para ser dependente da tarefa T1
     # Atualização da pesquisa no elasticsearch executada após a atualização dos metadados da tabela
     postgres_table_extract_job >> postgres_es_index_job
-
-
-
-
-
-    # Vamos Definir a nossa Primeira Tarefa 
-    t1 = BashOperator(bash_command="touch ~/meu_arquivo_01.txt", task_id="criar_arquivo")
-
-    # Vamos definir a nossa segunda tarefa
-    t2 = BashOperator(bash_command="mv ~/meu_arquivo_01.txt ~/meu_arquivo_01_MUDOU.txt", task_id="mudar_nome_do_arquivo")    
-
-    # Configurar a tarefa T2 para ser dependente da tarefa T1
-    t1 >> t2 
+    
+    
